@@ -5,26 +5,34 @@ import 'package:mosh/core/utils.dart';
 Widget buildTopicListView(BuildContext context, List<TopicInfo> topics) {
   return ListView.separated(
       itemBuilder: (context, index) {
-        return const Text("hello");
+        var topic = topics[index];
+        return buildTopicTile(
+            context,
+            topic.title,
+            topic.ownerUserName,
+            topic.nodeTitle,
+            topic.ownerAvatar,
+            topic.replies,
+            topic.latestReplyTime);
       },
       separatorBuilder: (contex, index) {
         return const SizedBox(
-          width: 10,
+          height: 10,
         );
       },
       itemCount: topics.length);
 }
 
 Widget buildTopicTile(BuildContext context, String title, String username,
-    String node, String avatar, int comments, DateTime lastUpdateTime) {
+    String node, String avatar, int replies, DateTime latestReplyTime) {
   return Column(children: [
     Row(
       children: [
         Column(
           children: [
             CircleAvatar(
+              backgroundImage: NetworkImage(avatar),
               backgroundColor: Colors.brown.shade800,
-              child: const Text("AH"),
             )
           ],
         ),
@@ -36,10 +44,10 @@ Widget buildTopicTile(BuildContext context, String title, String username,
                     Row(children: [Text(username)]),
                     Row(
                       children: [
-                        Text(readableTime(lastUpdateTime)),
+                        Text(readableTime(latestReplyTime)),
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
-                          child: Text("评论 $comments"),
+                          child: Text("评论 $replies"),
                         ),
                       ],
                     )
@@ -59,14 +67,16 @@ Widget buildTopicTile(BuildContext context, String title, String username,
         )
       ],
     ),
-    Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(title),
-        )
-      ],
-    ),
+    Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            title,
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )),
     const Divider(
       thickness: 1,
     )

@@ -44,7 +44,7 @@ class TopicService extends ServiceBase {
       var id =
           int.parse(titleNode.attributes["href"]!.split("/")[2].split("#")[0]);
 
-      var avatar = element.querySelector("img>.avatar")!.attributes["src"]!;
+      var avatar = element.querySelector("img.avatar")!.attributes["src"]!;
 
       var topicInfoElement = element.querySelector("span.topic_info")!;
       var nodeTitleElement = topicInfoElement.querySelector("a.node")!;
@@ -63,9 +63,8 @@ class TopicService extends ServiceBase {
       if (replyElements.length > 1) {
         latestReplyUserName = replyElements[1].text;
       }
-
       return TopicInfo(id, title, avatar, userName, nodeTitle, nodeName, votes,
-          replies, latestReplyUserName, latestReplyTime);
+          replies, latestReplyUserName, DateTime.parse(latestReplyTime));
     }
 
     return cellItems.map((o) => _parseTopic(o));

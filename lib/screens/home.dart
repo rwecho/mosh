@@ -33,7 +33,10 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
         SizedBox(
           height: 30,
           child: NotificationListener(
-            child: buildTab(context, _topicTabs),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: buildTab(context, _topicTabs),
+            ),
             onNotification: (e) {
               return true;
             },
@@ -42,8 +45,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
         Flexible(
             child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: FutureBuilder<PagedResult<TopicInfo>>(
-                  future: _topicService.getRecentTopics(),
+                child: FutureBuilder<List<TopicInfo>>(
+                  future: _topicService.getTabTopics("r2"),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -57,7 +60,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin<Home> {
                       );
                     }
                     var topics = snapshot.data;
-                    return buildTopicListView(context, topics!.items);
+                    return buildTopicListView(context, topics!);
                   },
                 )))
       ],

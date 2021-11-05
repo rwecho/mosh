@@ -9,7 +9,7 @@ class TopicInfo {
   final String votes;
   final int replies;
   final String latestReplyUserName;
-  final String latestReplyTime;
+  final DateTime latestReplyTime;
 
   const TopicInfo(
       this.id,
