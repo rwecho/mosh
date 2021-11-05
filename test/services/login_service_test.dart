@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mosh/v2ex_core/services/login_service.dart';
+import 'package:mosh/core/services/login_service.dart';
 
 void main() async {
   var loginServie = LoginService();
