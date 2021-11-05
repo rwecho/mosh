@@ -1,4 +1,4 @@
-import 'package:mosh/v2ex_core/models/my_node.dart';
+import 'package:mosh/core/models/my_node.dart';
 
 import 'reply.dart';
 

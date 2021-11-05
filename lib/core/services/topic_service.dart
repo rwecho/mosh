@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:html/dom.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
-import 'package:mosh/v2ex_core/models/my_node.dart';
-import 'package:mosh/v2ex_core/models/reply.dart';
-import 'package:mosh/v2ex_core/models/topic.dart';
-import 'package:mosh/v2ex_core/models/topic_info.dart';
+import 'package:mosh/core/models/my_node.dart';
+import 'package:mosh/core/models/reply.dart';
+import 'package:mosh/core/models/topic.dart';
+import 'package:mosh/core/models/topic_info.dart';
 
 import 'service_base.dart';
 

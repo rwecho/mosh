@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:html/dom.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
-import 'package:mosh/v2ex_core/models/my_node.dart';
-import 'package:mosh/v2ex_core/models/node_link.dart';
+import 'package:mosh/core/models/my_node.dart';
+import 'package:mosh/core/models/node_link.dart';
 
 import 'service_base.dart';
 
