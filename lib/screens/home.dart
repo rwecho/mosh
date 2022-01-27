@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mosh/core/models/my_node.dart';
 import 'package:mosh/core/models/topic_info.dart';
 import 'package:mosh/core/models/topic_tab.dart';
 import 'package:mosh/core/services/topic_service.dart';

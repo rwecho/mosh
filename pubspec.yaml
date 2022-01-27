@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: '>=2.13.0 <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,7 +30,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -38,6 +37,16 @@ dependencies:
   html: ^0.15.0
   logger: ^1.1.0
   intl: ^0.17.0
+  flutter_bloc: ^8.0.1
+  flutter_localizations:
+    sdk: flutter
+  local_storage_todos_api:
+    path: packages/local_storage_todos_api
+  todos_api:
+    path: packages/todos_api
+  todos_repository:
+    path: packages/todos_repository
+  flutter_services_binding: ^0.1.0
 
 dev_dependencies:
   flutter_test:
@@ -49,17 +58,19 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  bloc_test: ^9.0.2
+  mocktail: ^0.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:
