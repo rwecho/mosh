@@ -25,7 +25,7 @@ class TodoListTile extends StatelessWidget {
       onDismissed: onDismissed,
       direction: DismissDirection.endToStart,
       background: Container(
-        alignment: Alignment.centerRight,
+        alignment: Alignment.bottomRight,
         color: theme.colorScheme.error,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: const Icon(

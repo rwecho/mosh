@@ -3,6 +3,7 @@ import 'package:mosh/bootstrap.dart';
 import 'package:local_storage_todos_api/local_storage_todos_api.dart';
 
 Future<void> main() async {
+  // refer to https://pub.dev/packages/flutter_services_binding
   FlutterServicesBinding.ensureInitialized();
 
   final todosApi = LocalStorageTodosApi(

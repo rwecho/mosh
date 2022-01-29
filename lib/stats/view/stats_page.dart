@@ -51,6 +51,17 @@ class StatsView extends StatelessWidget {
               '${state.activeTodos}',
               style: textTheme.headline5,
             ),
+            onTap: () {
+              final snackBar = SnackBar(
+                content: const Text('Yay! A SnackBar!'),
+                action: SnackBarAction(
+                  label: 'Undo',
+                  onPressed: () {},
+                ),
+              );
+
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            },
           ),
         ],
       ),

@@ -12,6 +12,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // DI widget to provider a repository to subtrees.
     return RepositoryProvider.value(
       value: todosRepository,
       child: const AppView(),

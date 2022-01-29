@@ -9,6 +9,7 @@ import 'package:todos_api/todos_api.dart';
 import 'package:todos_repository/todos_repository.dart';
 
 void bootstrap({required TodosApi todosApi}) {
+  // global error catcher
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
