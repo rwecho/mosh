@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mosh/edit_todo/edit_todo.dart';
-import 'package:mosh/home/home.dart';
-import 'package:mosh/stats/stats.dart';
-import 'package:mosh/todos_overview/todos_overview.dart';
+import 'package:mosh/features/features.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
