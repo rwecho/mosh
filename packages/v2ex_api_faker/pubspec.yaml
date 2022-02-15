@@ -1,0 +1,22 @@
+name: v2ex_api_faker
+description: A fake implementation of the V2exApi.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: '>=2.13.0 <3.0.0'
+
+dependencies:
+  faker: ^2.0.0
+  flutter:
+    sdk: flutter
+  meta: ^1.3.0
+  rxdart: ^0.27.2
+  v2ex_api_abstractions:
+    path: ../v2ex_api_abstractions
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.2.0
+  very_good_analysis: ^2.4.0

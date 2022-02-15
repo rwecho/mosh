@@ -1,0 +1,10 @@
+name: v2ex_api_abstractions
+description: The interface and models for an API providing access to v2ex.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: '>=2.13.0 <3.0.0'
+dependencies:
+  equatable: ^2.0.3
+  uuid: ^3.0.4

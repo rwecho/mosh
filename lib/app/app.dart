@@ -4,17 +4,24 @@ import 'package:mosh/features/features.dart';
 import 'package:mosh/l10n/l10n.dart';
 import 'package:mosh/theme/theme.dart';
 import 'package:todos_repository/todos_repository.dart';
+import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key, required this.todosRepository}) : super(key: key);
+  const App({Key? key, required this.todosRepository, required this.tabApi})
+      : super(key: key);
 
   final TodosRepository todosRepository;
+  final TabApiAbstraction tabApi;
 
   @override
   Widget build(BuildContext context) {
     // DI widget to provider a repository to subtrees.
-    return RepositoryProvider.value(
-      value: todosRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<TodosRepository>(
+            create: (context) => todosRepository),
+        RepositoryProvider<TabApiAbstraction>(create: (context) => tabApi),
+      ],
       child: const AppView(),
     );
   }
@@ -30,7 +37,7 @@ class AppView extends StatelessWidget {
       darkTheme: FlutterTodosTheme.dark,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const TodoHomePage(),
+      home: const HomePage(),
     );
   }
 }

@@ -46,6 +46,8 @@ dependencies:
     path: packages/todos_api
   todos_repository:
     path: packages/todos_repository
+  v2ex_api_faker:
+    path: packages/v2ex_api_faker
   flutter_services_binding: ^0.1.0
 
 dev_dependencies:
