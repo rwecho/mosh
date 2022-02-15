@@ -30,22 +30,32 @@ class _HomeView extends StatelessWidget {
           child: Text("v2ex"),
         ),
       ),
-      body: const Text("body"),
+      body: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: tabs.length,
+          itemBuilder: (context1, index) {
+            var tab = tabs[index];
+            return Text(tab.title);
+          }),
       bottomNavigationBar: BottomAppBar(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Flexible(
+              child: SizedBox(
+                height: 44,
                 child: ListView.builder(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: tabs.length,
                     itemBuilder: (context1, index) {
                       var tab = tabs[index];
                       return TextButton(
                           onPressed: () => {}, child: Text(tab.title));
-                    })),
-            Text("hello"),
-            Text("hello")
+                    }),
+              ),
+            ),
+            TextButton(onPressed: () => {}, child: Text("hello"))
           ],
         ),
       ),
