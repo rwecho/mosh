@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mosh/features/features.dart';
+import 'package:mosh/features/todo_feature/todo_feature.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class TodoHomePage extends StatelessWidget {
+  const TodoHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeCubit(),
-      child: const HomeView(),
+      create: (_) => TodoHomeCubit(),
+      child: const TodoHomeView(),
     );
   }
 }
 
-class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+class TodoHomeView extends StatelessWidget {
+  const TodoHomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // rerender with cubit.state.tab
-    final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
+    final selectedTab =
+        context.select((TodoHomeCubit cubit) => cubit.state.tab);
 
     return Scaffold(
       body: IndexedStack(
@@ -40,12 +41,12 @@ class HomeView extends StatelessWidget {
           children: [
             _HomeTabButton(
               groupValue: selectedTab,
-              value: HomeTab.todos,
+              value: TodoHomeTab.todos,
               icon: const Icon(Icons.list_rounded),
             ),
             _HomeTabButton(
               groupValue: selectedTab,
-              value: HomeTab.stats,
+              value: TodoHomeTab.stats,
               icon: const Icon(Icons.show_chart_rounded),
             ),
           ],
@@ -63,14 +64,14 @@ class _HomeTabButton extends StatelessWidget {
     required this.icon,
   }) : super(key: key);
 
-  final HomeTab groupValue;
-  final HomeTab value;
+  final TodoHomeTab groupValue;
+  final TodoHomeTab value;
   final Widget icon;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => context.read<HomeCubit>().setTab(value),
+      onPressed: () => context.read<TodoHomeCubit>().setTab(value),
       iconSize: 32,
       color:
           groupValue != value ? null : Theme.of(context).colorScheme.secondary,

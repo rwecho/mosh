@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mosh/l10n/l10n.dart';
-import 'package:mosh/features/features.dart';
+import 'package:mosh/features/todo_feature/todo_feature.dart';
 import 'package:todos_repository/todos_repository.dart';
 
 class StatsPage extends StatelessWidget {

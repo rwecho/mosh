@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mosh/features/edit_todo/edit_todo.dart';
+import 'package:mosh/features/todo_feature/edit_todo/edit_todo.dart';
 import 'package:mosh/l10n/l10n.dart';
 import 'package:todos_repository/todos_repository.dart';
 
