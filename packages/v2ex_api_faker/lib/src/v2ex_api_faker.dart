@@ -1,10 +1,9 @@
-import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 import 'package:faker/faker.dart';
+import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 
 class TabApi extends TabApiAbstraction {
+  TabApi() : _faker = Faker();
   final Faker _faker;
-
-  TabApi() : _faker = Faker() {}
 
   @override
   List<Tab> getTabs() {

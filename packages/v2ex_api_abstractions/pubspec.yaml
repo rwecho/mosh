@@ -8,3 +8,8 @@ environment:
 dependencies:
   equatable: ^2.0.3
   uuid: ^3.0.4
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.2.0
+  very_good_analysis: ^2.4.0

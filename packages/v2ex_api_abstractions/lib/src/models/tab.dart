@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
+@immutable
 class Tab extends Equatable {
-  Tab({
+  const Tab({
     required this.title,
   });
 

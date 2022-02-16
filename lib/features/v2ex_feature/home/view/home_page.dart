@@ -55,7 +55,7 @@ class _HomeView extends StatelessWidget {
                     }),
               ),
             ),
-            TextButton(onPressed: () => {}, child: Text("hello"))
+            TextButton(onPressed: () => {}, child: const Text("hello"))
           ],
         ),
       ),
