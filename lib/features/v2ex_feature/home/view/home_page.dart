@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mosh/features/v2ex_feature/home/widgets/home_bottom_tabs.dart';
 
 import '../cubit/home_cubit.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
@@ -23,7 +24,7 @@ class _HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var tabs = context.read<HomeCubit>().state.tabs;
-
+    var selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -41,19 +42,12 @@ class _HomeView extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         child: Row(
           children: [
-            Flexible(
-              child: SizedBox(
-                height: 44,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: tabs.length,
-                    itemBuilder: (context1, index) {
-                      var tab = tabs[index];
-                      return TextButton(
-                          onPressed: () => {}, child: Text(tab.title));
-                    }),
-              ),
+            HomeBottomTabs(
+              tabs: tabs,
+              tab: selectedTab,
+              onTabChanged: (tab) {
+                context.read<HomeCubit>().setTab(tab);
+              },
             ),
             TextButton(onPressed: () => {}, child: const Text("hello"))
           ],
@@ -62,3 +56,5 @@ class _HomeView extends StatelessWidget {
     );
   }
 }
+
+class ChangeTab {}
