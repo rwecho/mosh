@@ -25,20 +25,18 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     var tabs = context.read<HomeCubit>().state.tabs;
     var selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
+    var index = tabs.indexOf(selectedTab!);
+    // todo add index stack of tabs
     return Scaffold(
       appBar: AppBar(
         title: const Center(
           child: Text("v2ex"),
         ),
       ),
-      body: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: tabs.length,
-          itemBuilder: (context1, index) {
-            var tab = tabs[index];
-            return Text(tab.title);
-          }),
+      body: IndexedStack(
+        index: index,
+        children: [Text("$index"), Text("$index"), Text("$index")],
+      ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           children: [
