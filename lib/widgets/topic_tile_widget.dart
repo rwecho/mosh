@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mosh/core/models/topic_info.dart';
 import 'package:mosh/core/utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 Widget buildTopicListView(BuildContext context, List<TopicInfo> topics) {
   return ListView.separated(
@@ -30,10 +31,19 @@ Widget buildTopicTile(BuildContext context, String title, String username,
       children: [
         Column(
           children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(avatar),
-              backgroundColor: Colors.brown.shade800,
-            )
+            ClipRRect(
+              borderRadius: BorderRadius.circular(25.0),
+              child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  width: 150,
+                  height: 50,
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(
+                        color: Colors.yellow,
+                      ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  imageUrl: avatar),
+            ),
           ],
         ),
         Expanded(

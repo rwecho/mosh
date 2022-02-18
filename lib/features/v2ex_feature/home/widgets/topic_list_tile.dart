@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class TopicListTile extends StatelessWidget {
   const TopicListTile({Key? key, required this.topic, this.onTap})
@@ -12,10 +13,15 @@ class TopicListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.network(
-          topic.authorAvatar,
-          width: 48,
-          height: 48,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(25.0),
+          child: CachedNetworkImage(
+              fit: BoxFit.cover,
+              width: 48,
+              height: 48,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              imageUrl: topic.authorAvatar),
         ),
         Flexible(
             fit: FlexFit.tight,
