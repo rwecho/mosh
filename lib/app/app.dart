@@ -7,11 +7,16 @@ import 'package:todos_repository/todos_repository.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key, required this.todosRepository, required this.tabApi})
+  const App(
+      {Key? key,
+      required this.todosRepository,
+      required this.tabApi,
+      required this.topicApi})
       : super(key: key);
 
   final TodosRepository todosRepository;
   final TabApiAbstraction tabApi;
+  final TopicApiAbstraction topicApi;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +26,7 @@ class App extends StatelessWidget {
         RepositoryProvider<TodosRepository>(
             create: (context) => todosRepository),
         RepositoryProvider<TabApiAbstraction>(create: (context) => tabApi),
+        RepositoryProvider<TopicApiAbstraction>(create: (context) => topicApi),
       ],
       child: const AppView(),
     );

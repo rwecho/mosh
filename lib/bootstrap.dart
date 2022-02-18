@@ -17,11 +17,16 @@ void bootstrap({required TodosApi todosApi}) {
 
   final todosRepository = TodosRepository(todosApi: todosApi);
   final tabApi = TabApi();
+  final topicApi = TopicApi();
   runZonedGuarded(
     () async {
       await BlocOverrides.runZoned(
         () async => runApp(
-          App(todosRepository: todosRepository, tabApi: tabApi),
+          App(
+            todosRepository: todosRepository,
+            tabApi: tabApi,
+            topicApi: topicApi,
+          ),
         ),
         blocObserver: AppBlocObserver(),
       );

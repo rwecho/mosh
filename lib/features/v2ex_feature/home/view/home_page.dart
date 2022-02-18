@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mosh/features/v2ex_feature/home/view/tab_view.dart';
 import 'package:mosh/features/v2ex_feature/home/widgets/home_bottom_tabs.dart';
+import 'package:mosh/widgets/lazy_indexed_stack.dart';
 
 import '../cubit/home_cubit.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
@@ -26,16 +28,20 @@ class _HomeView extends StatelessWidget {
     var tabs = context.read<HomeCubit>().state.tabs;
     var selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
     var index = tabs.indexOf(selectedTab!);
-    // todo add index stack of tabs
+
+    debugPrint("tab index $index");
+
+    final tabViews = tabs.map((tab) => TabView(tab: tab)).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(
           child: Text("v2ex"),
         ),
       ),
-      body: IndexedStack(
+      body: LazyIndexedStack(
         index: index,
-        children: [Text("$index"), Text("$index"), Text("$index")],
+        children: tabViews,
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(

@@ -4,19 +4,22 @@
       "name": "Flutter development",
       "program": "lib/main_development.dart",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "flutterMode": "debug"
     },
     {
       "name": "Flutter production",
       "program": "lib/main_production.dart",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "flutterMode": "debug"
     },
     {
       "name": "Flutter staging",
       "program": "lib/main_staging.dart",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "flutterMode": "debug"
     }
   ]
 }
