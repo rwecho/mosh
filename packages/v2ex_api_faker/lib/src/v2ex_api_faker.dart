@@ -33,7 +33,7 @@ class TopicApi extends TopicApiAbstraction with AbstractionBase {
           group: _faker.sport.name(),
           author: _faker.person.name(),
           authorAvatar: _faker.image.image(random: true),
-          latestReplyTime: _faker.date.dateTime(),
+          latestReplyTime: _faker.date.dateTime(minYear: 2014, maxYear: 2022),
           latestReplyUser: _faker.person.name(),
           replyCount: _faker.randomGenerator.integer(200),
         ),

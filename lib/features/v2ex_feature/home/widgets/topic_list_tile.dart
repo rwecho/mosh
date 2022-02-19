@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mosh/features/v2ex_feature/topic/view/topic_page.dart';
+import 'package:mosh/utils/datetime_extensions.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -29,6 +31,7 @@ class TopicListTile extends StatelessWidget {
             child: Column(
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(topic.group),
                     const Text("  •  "),
@@ -36,15 +39,25 @@ class TopicListTile extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   // use flexible to wrap line
-                  children: [Flexible(child: Text(topic.title))],
+                  children: [
+                    Flexible(
+                        child: InkWell(
+                      child: Text(topic.title),
+                      onTap: () => {
+                        Navigator.of(context)
+                            .push(TopicPage.route(topic: topic))
+                      },
+                    ))
+                  ],
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("${topic.latestReplyTime}"),
-                    const Text("  •  "),
-                    const Text("最后回复来自 "),
-                    Text(topic.latestReplyUser),
+                    Text(topic.latestReplyTime.humanReadable()),
+                    const Text("  • "),
+                    Flexible(child: Text(" 最后回复来自 ${topic.latestReplyUser}")),
                   ],
                 )
               ],
