@@ -64,20 +64,10 @@ class _TabView extends StatelessWidget {
             }
           }
 
-          return CupertinoScrollbar(
-            child: Column(
-              children: [
-                Text(state.tab.title),
-                Flexible(
-                  child: ListView(
-                    children: [
-                      for (final topic in state.topics)
-                        TopicListTile(topic: topic)
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          return ListView(
+            children: [
+              for (final topic in state.topics) TopicListTile(topic: topic)
+            ],
           );
         },
       ),

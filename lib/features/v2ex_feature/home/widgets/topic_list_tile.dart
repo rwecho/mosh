@@ -1,29 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:mosh/features/v2ex_feature/topic/view/topic_page.dart';
+import 'package:mosh/features/v2ex_feature/user/view/user_page.dart';
 import 'package:mosh/utils/datetime_extensions.dart';
-import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
+import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart' as models;
 import 'package:cached_network_image/cached_network_image.dart';
+
+import '../../node/view/node_page.dart';
 
 class TopicListTile extends StatelessWidget {
   const TopicListTile({Key? key, required this.topic, this.onTap})
       : super(key: key);
 
-  final Topic topic;
+  final models.Topic topic;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(25.0),
-          child: CachedNetworkImage(
-              fit: BoxFit.cover,
-              width: 48,
-              height: 48,
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              imageUrl: topic.authorAvatar),
+        InkWell(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(25.0),
+            child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                width: 48,
+                height: 48,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                imageUrl: topic.authorAvatar),
+          ),
+          onTap: () => {
+            Navigator.of(context)
+                .push(UserPage.route(user: models.User(name: topic.author)))
+          },
         ),
         Flexible(
             fit: FlexFit.tight,
@@ -33,9 +43,21 @@ class TopicListTile extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(topic.group),
+                    InkWell(
+                      child: Text(topic.node),
+                      onTap: () => {
+                        Navigator.of(context).push(NodePage.route(
+                            node: models.Node(title: topic.node)))
+                      },
+                    ),
                     const Text("  •  "),
-                    Text(topic.author)
+                    InkWell(
+                      child: Text(topic.author),
+                      onTap: () => {
+                        Navigator.of(context).push(UserPage.route(
+                            user: models.User(name: topic.author)))
+                      },
+                    )
                   ],
                 ),
                 Row(
@@ -57,7 +79,14 @@ class TopicListTile extends StatelessWidget {
                   children: [
                     Text(topic.latestReplyTime.humanReadable()),
                     const Text("  • "),
-                    Flexible(child: Text(" 最后回复来自 ${topic.latestReplyUser}")),
+                    const Flexible(child: Text(" 最后回复来自 ")),
+                    InkWell(
+                        onTap: () => {
+                              Navigator.of(context).push(UserPage.route(
+                                  user:
+                                      models.User(name: topic.latestReplyUser)))
+                            },
+                        child: Text(topic.latestReplyUser)),
                   ],
                 )
               ],

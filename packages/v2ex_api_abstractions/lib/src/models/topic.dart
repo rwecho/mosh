@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 class Topic extends Equatable {
   const Topic(
       {required this.title,
-      required this.group,
+      required this.node,
       required this.author,
       required this.authorAvatar,
       required this.latestReplyTime,
@@ -13,7 +13,7 @@ class Topic extends Equatable {
       required this.replyCount});
 
   final String title;
-  final String group;
+  final String node;
   final String author;
   final String latestReplyUser;
   final DateTime latestReplyTime;

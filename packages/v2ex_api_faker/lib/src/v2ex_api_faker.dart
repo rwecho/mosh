@@ -30,7 +30,7 @@ class TopicApi extends TopicApiAbstraction with AbstractionBase {
       topics.add(
         Topic(
           title: _faker.lorem.sentence(),
-          group: _faker.sport.name(),
+          node: _faker.sport.name(),
           author: _faker.person.name(),
           authorAvatar: _faker.image.image(random: true),
           latestReplyTime: _faker.date.dateTime(minYear: 2014, maxYear: 2022),

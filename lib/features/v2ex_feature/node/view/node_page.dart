@@ -2,34 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 
-import '../bloc/topic_bloc.dart';
+import '../bloc/node_bloc.dart';
 
-class TopicPage extends StatelessWidget {
-  const TopicPage({Key? key}) : super(key: key);
+class NodePage extends StatelessWidget {
+  const NodePage({Key? key}) : super(key: key);
 
-  static Route<void> route({required Topic topic}) {
+  static Route<void> route({required Node node}) {
     return MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (context) => BlocProvider(
-        create: (context) => TopicBloc(
-          topic: topic,
-        ),
-        child: const TopicPage(),
-      ),
-    );
+        fullscreenDialog: true,
+        builder: (context) => BlocProvider(
+            create: (context) => NodeBloc(node: node),
+            child: const NodePage()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TopicBloc, TopicState>(
-      listenWhen: (previous, current) => false,
-      listener: (context, state) => Navigator.of(context).pop(),
-      child: _TopicView(),
-    );
+    return _NodeView();
   }
 }
 
-class _TopicView extends StatelessWidget {
+class _NodeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +40,6 @@ class _TopicView extends StatelessWidget {
             ),
           ),
         ),
-        body: const Center(child: Text("topic")));
+        body: const Center(child: Text("node")));
   }
 }

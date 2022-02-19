@@ -2,34 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 
-import '../bloc/topic_bloc.dart';
+import '../bloc/user_bloc.dart';
 
-class TopicPage extends StatelessWidget {
-  const TopicPage({Key? key}) : super(key: key);
+class UserPage extends StatelessWidget {
+  const UserPage({Key? key}) : super(key: key);
 
-  static Route<void> route({required Topic topic}) {
+  static Route<void> route({required User user}) {
     return MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (context) => BlocProvider(
-        create: (context) => TopicBloc(
-          topic: topic,
-        ),
-        child: const TopicPage(),
-      ),
-    );
+        fullscreenDialog: false,
+        builder: (context) => BlocProvider(
+            create: (context) => UserBloc(user: user),
+            child: const UserPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TopicBloc, TopicState>(
-      listenWhen: (previous, current) => false,
-      listener: (context, state) => Navigator.of(context).pop(),
-      child: _TopicView(),
-    );
+    return _UserView();
   }
 }
 
-class _TopicView extends StatelessWidget {
+class _UserView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +40,6 @@ class _TopicView extends StatelessWidget {
             ),
           ),
         ),
-        body: const Center(child: Text("topic")));
+        body: const Center(child: Text("user")));
   }
 }
