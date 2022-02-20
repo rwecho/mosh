@@ -64,83 +64,86 @@ class _TopicView extends StatelessWidget {
             IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz))
           ],
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(topic.title),
-            Text(
-                "by ${topic.author} at ${topic.creationTime} • ${topic.visits} views"),
-            const Divider(),
-            // todo render markdown
-            Html(
-              data: "<div>hello world</div>",
-            ),
-            const Divider(),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(topic.title),
+              Text(
+                  "by ${topic.author} at ${topic.creationTime} • ${topic.visits} views"),
+              const Divider(),
+              // todo render markdown
+              Html(
+                data: "<div>hello world</div>",
+              ),
+              const Divider(),
 
-            Row(
-              children: [
-                Text("19 likes"),
-                Flexible(
-                  child: ElevatedButton(
-                      onPressed: () {}, child: Text("Add to Favirities")),
-                ),
-                Flexible(
+              Row(
+                children: [
+                  Text("19 likes"),
+                  Flexible(
                     child: ElevatedButton(
-                        onPressed: () {}, child: const Text("Tweet"))),
-                Flexible(
-                    child: ElevatedButton(
-                        onPressed: () {}, child: const Text("Share"))),
-                Flexible(
-                    child: ElevatedButton(
-                        onPressed: () {}, child: const Text("Ignore"))),
-                Flexible(
-                    child: ElevatedButton(
-                        onPressed: () {}, child: const Text("Thank"))),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Card(
-                    elevation: 10,
-                    child: Row(
-                      children: [
-                        const Icon(Icons.tag),
-                        ElevatedButton(onPressed: () {}, child: Text("Fred's")),
-                        ElevatedButton(onPressed: () {}, child: Text("Fred")),
-                        ElevatedButton(
-                            onPressed: () {}, child: Text("scripts")),
-                        ElevatedButton(onPressed: () {}, child: Text("程序员")),
-                      ],
+                        onPressed: () {}, child: Text("Add to Favirities")),
+                  ),
+                  Flexible(
+                      child: ElevatedButton(
+                          onPressed: () {}, child: const Text("Tweet"))),
+                  Flexible(
+                      child: ElevatedButton(
+                          onPressed: () {}, child: const Text("Share"))),
+                  Flexible(
+                      child: ElevatedButton(
+                          onPressed: () {}, child: const Text("Ignore"))),
+                  Flexible(
+                      child: ElevatedButton(
+                          onPressed: () {}, child: const Text("Thank"))),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      elevation: 10,
+                      child: Row(
+                        children: [
+                          const Icon(Icons.tag),
+                          ElevatedButton(
+                              onPressed: () {}, child: Text("Fred's")),
+                          ElevatedButton(onPressed: () {}, child: Text("Fred")),
+                          ElevatedButton(
+                              onPressed: () {}, child: Text("scripts")),
+                          ElevatedButton(onPressed: () {}, child: Text("程序员")),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Card(
-                    child: Column(children: [
-                      const Text("4 replies 2022-02-19 15:23:44 +08:00"),
-                      ...<Widget>[
-                        for (var i = 0; i < 10; i++)
-                          buildCommentTileWidget(
-                              context,
-                              "test",
-                              "https://source.unsplash.com/640x480?random=4",
-                              "subtitle",
-                              "comment",
-                              0,
-                              false,
-                              1)
-                      ]
-                    ]),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      child: Column(children: [
+                        const Text("4 replies 2022-02-19 15:23:44 +08:00"),
+                        ...<Widget>[
+                          for (var i = 0; i < 10; i++)
+                            buildCommentTileWidget(
+                                context,
+                                "test",
+                                "https://source.unsplash.com/640x480?random=4",
+                                "subtitle",
+                                "comment",
+                                0,
+                                false,
+                                1)
+                        ]
+                      ]),
+                    ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ));
   }
 }
