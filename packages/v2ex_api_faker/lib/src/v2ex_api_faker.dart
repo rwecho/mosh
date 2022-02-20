@@ -42,4 +42,47 @@ class TopicApi extends TopicApiAbstraction with AbstractionBase {
 
     return topics;
   }
+
+  @override
+  Future<TopicDetail> getTopicDetail(Topic topic) async {
+    return TopicDetail(
+      author: topic.author,
+      authorAvatar: topic.authorAvatar,
+      node: topic.node,
+      title: topic.title,
+      creationTime: _faker.date.dateTime(minYear: 2014, maxYear: 2022),
+      visits: _faker.randomGenerator.integer(200),
+      content: _faker.lorem.sentences(5).join('\r\n'),
+      postscripts: _faker.randomGenerator
+          .integer(3)
+          .fromZero()
+          .map((e) => _faker.lorem.sentence())
+          .toList(),
+      likes: _faker.randomGenerator.integer(100),
+      tags: _faker.randomGenerator
+          .integer(5)
+          .fromZero()
+          .map((e) => _faker.sport.name())
+          .toList(),
+    );
+  }
+
+  @override
+  Future<List<Comment>> getComments(Topic topic, int page) async {
+    final number = _faker.randomGenerator.integer(20);
+    final comments = <Comment>[];
+    for (var i = 0; i < number; i++) {
+      comments.add(
+        Comment(
+          author: _faker.person.firstName(),
+          authorAvatar: _faker.image.image(random: true),
+          replyTime: _faker.date.dateTime(minYear: 2014, maxYear: 2022),
+          isLike: _faker.randomGenerator.boolean(),
+          floors: i,
+          content: _faker.lorem.sentence(),
+        ),
+      );
+    }
+    return comments;
+  }
 }

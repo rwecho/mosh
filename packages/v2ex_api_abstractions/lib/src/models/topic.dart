@@ -28,3 +28,62 @@ class Topic extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
+class TopicDetail extends Equatable {
+  const TopicDetail(
+      {required this.author,
+      required this.authorAvatar,
+      required this.node,
+      required this.title,
+      required this.creationTime,
+      required this.visits,
+      required this.content,
+      required this.postscripts,
+      required this.likes,
+      required this.tags});
+  final String author;
+  final String authorAvatar;
+  final String node;
+  final String title;
+  final DateTime creationTime;
+  final int visits;
+  final String content;
+  final List<String> postscripts;
+  final int likes;
+  final List<String> tags;
+
+  @override
+  List<Object?> get props => [
+        author,
+        authorAvatar,
+        node,
+        title,
+        creationTime,
+        visits,
+        content,
+        postscripts,
+        likes,
+        tags
+      ];
+}
+
+class Comment extends Equatable {
+  const Comment({
+    required this.author,
+    required this.authorAvatar,
+    required this.replyTime,
+    required this.isLike,
+    required this.floors,
+    required this.content,
+  });
+  final String author;
+  final String authorAvatar;
+  final DateTime replyTime;
+  final bool isLike;
+  final int floors;
+  final String content;
+
+  @override
+  List<Object?> get props =>
+      [author, authorAvatar, replyTime, isLike, floors, content];
+}
