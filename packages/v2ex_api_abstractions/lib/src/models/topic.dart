@@ -3,14 +3,17 @@ import 'package:meta/meta.dart';
 
 @immutable
 class Topic extends Equatable {
-  const Topic(
-      {required this.title,
-      required this.node,
-      required this.author,
-      required this.authorAvatar,
-      required this.latestReplyTime,
-      required this.latestReplyUser,
-      required this.replyCount});
+  const Topic({
+    required this.title,
+    required this.node,
+    required this.author,
+    required this.authorAvatar,
+    required this.latestReplyTime,
+    required this.latestReplyUser,
+    required this.replyCount,
+    this.creationTime,
+    this.visits,
+  });
 
   final String title;
   final String node;
@@ -19,6 +22,8 @@ class Topic extends Equatable {
   final DateTime latestReplyTime;
   final String authorAvatar;
   final int replyCount;
+  final int? visits;
+  final DateTime? creationTime;
 
   @override
   List<Object?> get props => [];

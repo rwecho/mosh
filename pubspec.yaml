@@ -50,6 +50,9 @@ dependencies:
     path: packages/v2ex_api_faker
   flutter_services_binding: ^0.1.0
   cached_network_image: ^3.2.0
+  webview_flutter: ^3.0.0
+  flutter_html: ^3.0.0-alpha.2
+  fluttericon: ^2.0.0
 
 dev_dependencies:
   flutter_test:
