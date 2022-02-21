@@ -71,13 +71,20 @@ class _TopicView extends StatelessWidget {
               }
             })
       ],
-      child:
-          BlocBuilder<TopicViewBloc, TopicViewState>(builder: (context, state) {
+      child: BlocBuilder<TopicViewBloc, TopicViewState>(builder: (
+        context,
+        state,
+      ) {
         if (state.status == TopicViewStatus.loading) {
           return const Center(child: CupertinoActivityIndicator());
         } else if (state.status != TopicViewStatus.success) {
           return const Text("loading data failed.");
         }
+        if (state.topicDetail == null) {
+          return const Center(child: Text("loading topic detail failed."));
+        }
+        final topicDetail = state.topicDetail!;
+        final comments = state.comments;
         return Scaffold(
             appBar: AppBar(
               elevation: 0.0,
@@ -93,8 +100,8 @@ class _TopicView extends StatelessWidget {
                 ),
               ),
               title: Row(
-                children: const [
-                  Text("node name"),
+                children: [
+                  Text(state.topic.node),
                 ],
               ),
               actions: [
@@ -105,20 +112,20 @@ class _TopicView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(topic.title),
+                  Text(topicDetail.title),
                   Text(
-                      "by ${topic.author} at ${topic.creationTime} • ${topic.visits} views"),
+                      "by ${topicDetail.author} at ${topicDetail.creationTime} • ${topicDetail.visits} views"),
                   const Divider(),
                   // todo render markdown
                   Html(
-                    data: "<div>hello world</div>",
+                    data: topicDetail.content,
                   ),
                   const Divider(),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text("19 likes"),
+                      Text("${topicDetail.likes} likes"),
                       const SizedBox(
                         width: 4,
                       ),
@@ -214,18 +221,18 @@ class _TopicView extends StatelessWidget {
                       Expanded(
                         child: Card(
                           child: Column(children: [
-                            const Text("4 replies 2022-02-19 15:23:44 +08:00"),
+                            Text("${comments.length} replies"),
                             ...<Widget>[
-                              for (var i = 0; i < 10; i++)
+                              for (var comment in comments)
                                 buildCommentTileWidget(
                                     context,
-                                    "test",
-                                    "https://source.unsplash.com/640x480?random=4",
-                                    "subtitle",
-                                    "comment",
-                                    0,
-                                    false,
-                                    1)
+                                    comment.author,
+                                    comment.authorAvatar,
+                                    comment.replyTime,
+                                    comment.content,
+                                    comment.likes,
+                                    comment.isLike,
+                                    comment.floors)
                             ]
                           ]),
                         ),

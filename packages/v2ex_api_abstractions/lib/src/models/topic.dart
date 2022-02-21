@@ -30,17 +30,18 @@ class Topic extends Equatable {
 }
 
 class TopicDetail extends Equatable {
-  const TopicDetail(
-      {required this.author,
-      required this.authorAvatar,
-      required this.node,
-      required this.title,
-      required this.creationTime,
-      required this.visits,
-      required this.content,
-      required this.postscripts,
-      required this.likes,
-      required this.tags});
+  const TopicDetail({
+    required this.author,
+    required this.authorAvatar,
+    required this.node,
+    required this.title,
+    required this.creationTime,
+    required this.visits,
+    required this.content,
+    required this.postscripts,
+    required this.likes,
+    required this.tags,
+  });
   final String author;
   final String authorAvatar;
   final String node;
@@ -73,6 +74,7 @@ class Comment extends Equatable {
     required this.authorAvatar,
     required this.replyTime,
     required this.isLike,
+    required this.likes,
     required this.floors,
     required this.content,
   });
@@ -80,6 +82,7 @@ class Comment extends Equatable {
   final String authorAvatar;
   final DateTime replyTime;
   final bool isLike;
+  final int likes;
   final int floors;
   final String content;
 

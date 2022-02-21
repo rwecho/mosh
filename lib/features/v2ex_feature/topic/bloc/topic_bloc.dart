@@ -24,16 +24,12 @@ class TopicViewBloc extends Bloc<TopicViewEvent, TopicViewState> {
 
     try {
       final topicDetail = await _topicApi.getTopicDetail(_topic);
-      emit(state.copyWith(
-          status: () => TopicViewStatus.success, topicDetail: topicDetail));
-    } catch (_) {
-      emit(state.copyWith(status: () => TopicViewStatus.failure));
-    }
-
-    try {
       final comments = await _topicApi.getComments(_topic, 0);
       emit(state.copyWith(
-          status: () => TopicViewStatus.success, comments: comments));
+        status: () => TopicViewStatus.success,
+        topicDetail: topicDetail,
+        comments: comments,
+      ));
     } catch (_) {
       emit(state.copyWith(status: () => TopicViewStatus.failure));
     }

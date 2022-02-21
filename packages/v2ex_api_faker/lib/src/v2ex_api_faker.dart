@@ -77,6 +77,7 @@ class TopicApi extends TopicApiAbstraction with AbstractionBase {
           author: _faker.person.firstName(),
           authorAvatar: _faker.image.image(random: true),
           replyTime: _faker.date.dateTime(minYear: 2014, maxYear: 2022),
+          likes: _faker.randomGenerator.integer(100),
           isLike: _faker.randomGenerator.boolean(),
           floors: i,
           content: _faker.lorem.sentence(),

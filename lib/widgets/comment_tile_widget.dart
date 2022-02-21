@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
+import 'package:mosh/utils/datetime_extensions.dart';
 
 Widget buildCommentTileWidget(
     BuildContext context,
     String author,
     String authorAvatar,
-    String subtitle,
+    DateTime creationTime,
     String comment,
     int likes,
     bool isLike,
@@ -35,17 +36,16 @@ Widget buildCommentTileWidget(
                 Row(
                   children: [
                     Text(author),
-                    Flexible(fit: FlexFit.tight, child: Text(subtitle)),
+                    Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(creationTime.humanReadable())),
                     if (isLike)
                       IconButton(
                           onPressed: () {}, icon: const Icon(Typicons.heart)),
                     IconButton(onPressed: () {}, icon: const Icon(Icons.reply)),
-                    ElevatedButton(
+                    OutlinedButton(
                       onPressed: () {},
-                      child: const Text("1"),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.grey.shade400,
-                      ),
+                      child: Text("$floors"),
                     )
                   ],
                 ),
