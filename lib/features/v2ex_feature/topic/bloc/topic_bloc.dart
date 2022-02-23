@@ -14,12 +14,18 @@ class TopicViewBloc extends Bloc<TopicViewEvent, TopicViewState> {
           topicDetail: null,
         )) {
     on<TopicViewSubscriptionRequested>(_onTopicViewSubscriptionRequested);
+    on<AddToFavoritesRequested>(_onAddToFavoritesEvent);
+    on<TweetRequested>(_onTweetRequested);
+    on<ShareRequested>(_onShareRequested);
+    on<IgnoreRequested>(_onIgnoreRequested);
+    on<ThankRequested>(_onThankRequested);
   }
   final TopicApiAbstraction _topicApi;
   final Topic _topic;
 
   FutureOr<void> _onTopicViewSubscriptionRequested(
-      event, Emitter<TopicViewState> emit) async {
+      TopicViewSubscriptionRequested event,
+      Emitter<TopicViewState> emit) async {
     emit(state.copyWith(status: () => TopicViewStatus.loading));
 
     try {
@@ -33,6 +39,42 @@ class TopicViewBloc extends Bloc<TopicViewEvent, TopicViewState> {
     } catch (_) {
       emit(state.copyWith(status: () => TopicViewStatus.failure));
     }
+  }
+
+  FutureOr<void> _onAddToFavoritesEvent(
+      AddToFavoritesRequested event, Emitter<TopicViewState> emit) async {
+    try {
+      await _topicApi.addFavorites(_topic);
+      //todo: abstract a button with handing indicator
+    } catch (e) {}
+  }
+
+  FutureOr<void> _onTweetRequested(
+      TweetRequested event, Emitter<TopicViewState> emit) {
+    try {
+      _topicApi.tweet(_topic);
+    } catch (e) {}
+  }
+
+  FutureOr<void> _onShareRequested(
+      ShareRequested event, Emitter<TopicViewState> emit) {
+    try {
+      _topicApi.share(_topic);
+    } catch (e) {}
+  }
+
+  FutureOr<void> _onIgnoreRequested(
+      IgnoreRequested event, Emitter<TopicViewState> emit) {
+    try {
+      _topicApi.ignore(_topic);
+    } catch (e) {}
+  }
+
+  FutureOr<void> _onThankRequested(
+      ThankRequested event, Emitter<TopicViewState> emit) {
+    try {
+      _topicApi.thank(_topic);
+    } catch (e) {}
   }
 }
 
@@ -75,3 +117,13 @@ abstract class TopicViewEvent extends Equatable {
 }
 
 class TopicViewSubscriptionRequested extends TopicViewEvent {}
+
+class AddToFavoritesRequested extends TopicViewEvent {}
+
+class TweetRequested extends TopicViewEvent {}
+
+class ShareRequested extends TopicViewEvent {}
+
+class IgnoreRequested extends TopicViewEvent {}
+
+class ThankRequested extends TopicViewEvent {}

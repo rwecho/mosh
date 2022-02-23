@@ -86,4 +86,34 @@ class TopicApi extends TopicApiAbstraction with AbstractionBase {
     }
     return comments;
   }
+
+  @override
+  Future<void> addFavorites(Topic topic) {
+    // TODO: implement addFavorites
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> ignore(Topic topic) {
+    // TODO: implement ignore
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> share(Topic topic) {
+    // TODO: implement share
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> thank(Topic topic) {
+    // TODO: implement thank
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> tweet(Topic topic) {
+    // TODO: implement tweet
+    throw UnimplementedError();
+  }
 }

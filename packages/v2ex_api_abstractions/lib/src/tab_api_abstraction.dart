@@ -14,4 +14,14 @@ abstract class TopicApiAbstraction {
   Future<TopicDetail> getTopicDetail(Topic topic);
 
   Future<List<Comment>> getComments(Topic topic, int page);
+
+  Future<void> addFavorites(Topic topic);
+
+  Future<void> tweet(Topic topic);
+
+  Future<void> share(Topic topic);
+
+  Future<void> ignore(Topic topic);
+
+  Future<void> thank(Topic topic);
 }

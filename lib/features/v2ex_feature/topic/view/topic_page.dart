@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mosh/widgets/comment_tile_widget.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:mosh/l10n/l10n.dart';
 
+import '../../home/bloc/tab_view_bloc.dart';
 import '../bloc/topic_bloc.dart';
 
 class TopicPage extends StatelessWidget {
@@ -42,9 +43,6 @@ class _TopicView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var topic = context.read<TopicViewBloc>().state.topic;
-    if (Platform.isAndroid) {
-      WebView.platform = SurfaceAndroidWebView();
-    }
 
     final smallButtonStyle = OutlinedButton.styleFrom(
         minimumSize: const Size(20, 24), padding: const EdgeInsets.all(4));
@@ -130,10 +128,36 @@ class _TopicView extends StatelessWidget {
                         width: 4,
                       ),
                       OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            // context
+                            //     .read<TopicViewBloc>()
+                            //     .add(AddToFavoritesRequested());
+                            CupertinoScaffold.showCupertinoModalBottomSheet(
+                                expand: true,
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => Stack(
+                                      children: <Widget>[
+                                        ModalWithScroll(),
+                                        Positioned(
+                                          height: 40,
+                                          left: 40,
+                                          right: 40,
+                                          bottom: 20,
+                                          child: MaterialButton(
+                                            onPressed: () => Navigator.of(
+                                                    context)
+                                                .popUntil((route) =>
+                                                    route.settings.name == '/'),
+                                            child: Text('Pop back home'),
+                                          ),
+                                        )
+                                      ],
+                                    ));
+                          },
                           style: smallButtonStyle,
                           child: const Text(
-                            "Add to Favirities",
+                            "Add to Favorites",
                             style: TextStyle(fontSize: 12),
                           )),
                       const SizedBox(
