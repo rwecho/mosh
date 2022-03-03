@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 
-import '../bloc/user_bloc.dart';
+import '../bloc/search_bloc.dart';
 
-class UserPage extends StatelessWidget {
-  const UserPage({Key? key}) : super(key: key);
-
-  static Route<void> route({required User user}) {
+class SearchPage extends StatelessWidget {
+  const SearchPage({Key? key}) : super(key: key);
+  static Route<void> route() {
     return MaterialPageRoute(
         fullscreenDialog: false,
         builder: (context) => BlocProvider(
-            create: (context) => UserBloc(user: user),
-            child: const UserPage()));
+            create: (context) => SearchBloc(), child: const SearchPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return _UserView();
+    return _SearchView();
   }
 }
 
-class _UserView extends StatelessWidget {
+class _SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
           centerTitle: true,
-          title: const Text("User"),
+          title: const Text("Search"),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -38,6 +35,6 @@ class _UserView extends StatelessWidget {
             ),
           ),
         ),
-        body: const Center(child: Text("user")));
+        body: const Center(child: Text("search")));
   }
 }

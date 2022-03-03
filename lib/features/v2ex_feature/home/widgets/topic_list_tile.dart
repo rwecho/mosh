@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mosh/features/v2ex_feature/topic/view/topic_page.dart';
 import 'package:mosh/features/v2ex_feature/user/view/user_page.dart';
 import 'package:mosh/utils/datetime_extensions.dart';
+import 'package:mosh/widgets/avatar_button.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart' as models;
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -18,23 +19,12 @@ class TopicListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(25.0),
-            child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                width: 48,
-                height: 48,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                imageUrl: topic.authorAvatar),
-          ),
-          onTap: () => {
-            Navigator.of(context)
-                .push(UserPage.route(user: models.User(name: topic.author)))
-          },
-        ),
+        AvatarButton(
+            avatarUrl: topic.authorAvatar,
+            onTap: () => {
+                  Navigator.of(context).push(
+                      UserPage.route(user: models.User(name: topic.author)))
+                }),
         Flexible(
             fit: FlexFit.tight,
             flex: 1,

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mosh/features/v2ex_feature/home/view/tab_view.dart';
 import 'package:mosh/features/v2ex_feature/home/widgets/home_bottom_tabs.dart';
+import 'package:mosh/features/v2ex_feature/search/search.dart';
+import 'package:mosh/widgets/avatar_button.dart';
 import 'package:mosh/widgets/lazy_indexed_stack.dart';
 
 import '../cubit/home_cubit.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
+
+import '../widgets/home_modal_menu.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,6 +30,8 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme text = Theme.of(context).primaryTextTheme;
+
     var tabs = context.read<HomeCubit>().state.tabs;
     var selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
     var index = tabs.indexOf(selectedTab!);
@@ -35,45 +42,32 @@ class _HomeView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text("v2ex"),
-        ),
-      ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+          titleSpacing: 0,
+          title: Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    showCupertinoModalBottomSheet(
+                      expand: false,
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => const ModalMenu(),
+                    );
+                  },
+                  icon: const Icon(Icons.menu)),
+              const Spacer(),
+              Text(
+                "V2EX",
+                style: text.titleLarge!.copyWith(fontWeight: FontWeight.bold),
               ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('设置'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+              const Spacer(),
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(SearchPage.route());
+                  },
+                  icon: const Icon(Icons.search)),
+            ],
+          )),
       body: LazyIndexedStack(
         index: index,
         children: tabViews,

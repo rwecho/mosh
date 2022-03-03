@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 
-import '../bloc/user_bloc.dart';
+import '../bloc/settings_bloc.dart';
 
-class UserPage extends StatelessWidget {
-  const UserPage({Key? key}) : super(key: key);
-
-  static Route<void> route({required User user}) {
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({Key? key}) : super(key: key);
+  static Route<void> route() {
     return MaterialPageRoute(
         fullscreenDialog: false,
         builder: (context) => BlocProvider(
-            create: (context) => UserBloc(user: user),
-            child: const UserPage()));
+            create: (context) => SettingsBloc(), child: const SettingsPage()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return _UserView();
+    return _SettingsView();
   }
 }
 
-class _UserView extends StatelessWidget {
+class _SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
           centerTitle: true,
-          title: const Text("User"),
+          title: const Text("Settings"),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -38,6 +35,6 @@ class _UserView extends StatelessWidget {
             ),
           ),
         ),
-        body: const Center(child: Text("user")));
+        body: const Center(child: Text("settings")));
   }
 }

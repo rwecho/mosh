@@ -138,7 +138,6 @@ class _TopicView extends StatelessWidget {
                                 backgroundColor: Colors.transparent,
                                 builder: (context) => Stack(
                                       children: <Widget>[
-                                        ModalWithScroll(),
                                         Positioned(
                                           height: 40,
                                           left: 40,

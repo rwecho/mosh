@@ -54,6 +54,7 @@ dependencies:
   flutter_html: ^3.0.0-alpha.2
   fluttericon: ^2.0.0
   modal_bottom_sheet: ^2.0.0
+  flex_color_scheme: ^4.2.0
 
 dev_dependencies:
   flutter_test:
