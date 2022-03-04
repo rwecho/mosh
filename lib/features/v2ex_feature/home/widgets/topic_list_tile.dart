@@ -3,6 +3,7 @@ import 'package:mosh/features/v2ex_feature/topic/view/topic_page.dart';
 import 'package:mosh/features/v2ex_feature/user/view/user_page.dart';
 import 'package:mosh/utils/datetime_extensions.dart';
 import 'package:mosh/widgets/avatar_button.dart';
+import 'package:mosh/widgets/theme_card_widget.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart' as models;
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -80,15 +81,17 @@ class TopicListTile extends StatelessWidget {
                     )
                   ],
                 )),
-            OutlinedButton(
-                onPressed: () {},
-                child: InkWell(
-                  child: Text(topic.node),
-                  onTap: () => {
-                    Navigator.of(context).push(
-                        NodePage.route(node: models.Node(title: topic.node)))
-                  },
-                ))
+            InkWell(
+              child: ThemeCard(
+                label: topic.node,
+                color: theme.colorScheme.onPrimary,
+                textColor: theme.colorScheme.secondary,
+              ),
+              onTap: () => {
+                Navigator.of(context)
+                    .push(NodePage.route(node: models.Node(title: topic.node)))
+              },
+            )
           ],
         ),
         const SizedBox(height: 8),
