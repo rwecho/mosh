@@ -30,31 +30,30 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tabs = context.read<HomeCubit>().state.tabs;
+    final _tabController = TabController(length: tabs.length, vsync: this);
     final TextTheme text = Theme.of(context).primaryTextTheme;
 
-    var tabs = context.read<HomeCubit>().state.tabs;
     var selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
     var index = tabs.indexOf(selectedTab!);
-
-    debugPrint("tab index $index");
 
     final tabViews = tabs.map((tab) => TabView(tab: tab)).toList();
 
     return Scaffold(
       appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                showCupertinoModalBottomSheet(
+                  expand: false,
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => const ModalMenu(),
+                );
+              },
+              icon: const Icon(Icons.menu)),
           titleSpacing: 0,
           title: Row(
             children: [
-              IconButton(
-                  onPressed: () {
-                    showCupertinoModalBottomSheet(
-                      expand: false,
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) => const ModalMenu(),
-                    );
-                  },
-                  icon: const Icon(Icons.menu)),
               const Spacer(),
               Text(
                 "V2EX",
@@ -68,23 +67,13 @@ class _HomeView extends StatelessWidget {
                   icon: const Icon(Icons.search)),
             ],
           )),
-      body: LazyIndexedStack(
-        index: index,
-        children: tabViews,
+      body: TabBarView(
+        controller: _tabController,
+        children: [],
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: [
-            HomeBottomTabs(
-              tabs: tabs,
-              tab: selectedTab,
-              onTabChanged: (tab) {
-                context.read<HomeCubit>().setTab(tab);
-              },
-            ),
-            TextButton(onPressed: () => {}, child: const Text("hello"))
-          ],
-        ),
+        child:
+            TabBar(controller: _tabController, isScrollable: true, tabs: tabs),
       ),
     );
   }

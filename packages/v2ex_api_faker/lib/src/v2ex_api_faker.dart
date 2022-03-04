@@ -29,7 +29,7 @@ class TopicApi extends TopicApiAbstraction with AbstractionBase {
     for (var i = 0; i < number; i++) {
       topics.add(
         Topic(
-          title: _faker.lorem.sentence(),
+          title: _faker.lorem.sentences(2).join(' '),
           node: _faker.sport.name(),
           author: _faker.person.name(),
           authorAvatar: _faker.image.image(random: true),
