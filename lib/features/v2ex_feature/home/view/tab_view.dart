@@ -64,10 +64,22 @@ class _TabView extends StatelessWidget {
             }
           }
 
-          return ListView(
-            children: [
-              for (final topic in state.topics) TopicListTile(topic: topic)
-            ],
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ListView(
+              children: [
+                for (final topic in state.topics)
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: TopicListTile(topic: topic),
+                      ),
+                      const Divider(),
+                    ],
+                  )
+              ],
+            ),
           );
         },
       ),

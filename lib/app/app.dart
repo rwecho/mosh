@@ -5,6 +5,7 @@ import 'package:mosh/features/features.dart';
 import 'package:mosh/l10n/l10n.dart';
 import 'package:todos_repository/todos_repository.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatelessWidget {
   const App(
@@ -40,9 +41,15 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // The Mandy red, light theme.
-      theme: FlexThemeData.light(scheme: FlexScheme.mandyRed),
+      theme: FlexThemeData.light(
+        scheme: FlexScheme.mandyRed,
+        fontFamily: GoogleFonts.notoSans().fontFamily,
+      ),
       // The Mandy red, dark theme.
-      darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),
+      darkTheme: FlexThemeData.dark(
+        scheme: FlexScheme.mandyRed,
+        fontFamily: GoogleFonts.notoSans().fontFamily,
+      ),
       // Use dark or light theme based on system setting.
       themeMode: ThemeMode.system,
       localizationsDelegates: AppLocalizations.localizationsDelegates,

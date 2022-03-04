@@ -24,7 +24,7 @@ class TopicApi extends TopicApiAbstraction with AbstractionBase {
   Future<List<Topic>> getTopics(Tab tab) async {
     final number = _faker.randomGenerator.integer(200, min: 10);
 
-    await Future<void>.delayed(const Duration(seconds: 2));
+    // await Future<void>.delayed(const Duration(seconds: 2));
     final topics = <Topic>[];
     for (var i = 0; i < number; i++) {
       topics.add(

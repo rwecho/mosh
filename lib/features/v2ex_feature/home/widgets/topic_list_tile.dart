@@ -17,74 +17,91 @@ class TopicListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    final theme = Theme.of(context);
+
+    return Column(
       children: [
-        AvatarButton(
-            avatarUrl: topic.authorAvatar,
-            onTap: () => {
-                  Navigator.of(context).push(
-                      UserPage.route(user: models.User(name: topic.author)))
-                }),
-        Flexible(
-            fit: FlexFit.tight,
-            flex: 1,
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
+          children: [
+            AvatarButton(
+                avatarUrl: topic.authorAvatar,
+                onTap: () => {
+                      Navigator.of(context).push(
+                          UserPage.route(user: models.User(name: topic.author)))
+                    }),
+            const SizedBox(width: 8),
+            Flexible(
+                fit: FlexFit.tight,
+                flex: 1,
+                child: Column(
                   children: [
-                    InkWell(
-                      child: Text(topic.node),
-                      onTap: () => {
-                        Navigator.of(context).push(NodePage.route(
-                            node: models.Node(title: topic.node)))
-                      },
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          child: Text(topic.author),
+                          onTap: () => {
+                            Navigator.of(context).push(UserPage.route(
+                                user: models.User(name: topic.author)))
+                          },
+                        )
+                      ],
                     ),
-                    const Text("  •  "),
-                    InkWell(
-                      child: Text(topic.author),
-                      onTap: () => {
-                        Navigator.of(context).push(UserPage.route(
-                            user: models.User(name: topic.author)))
-                      },
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          topic.latestReplyTime.humanReadable(),
+                          style: theme.textTheme.caption,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          "comments ${topic.replyCount}",
+                          style: theme.textTheme.caption,
+                        ),
+                        const SizedBox(width: 8),
+                        Flexible(
+                            child: Text(
+                          " 最后回复来自 ",
+                          style: theme.textTheme.caption,
+                        )),
+                        const SizedBox(width: 8),
+                        InkWell(
+                          child: Text(
+                            topic.latestReplyUser,
+                            style: theme.textTheme.caption,
+                          ),
+                          onTap: () => {
+                            Navigator.of(context).push(UserPage.route(
+                                user: models.User(name: topic.author)))
+                          },
+                        ),
+                      ],
                     )
                   ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  // use flexible to wrap line
-                  children: [
-                    Flexible(
-                        child: InkWell(
-                      child: Text(topic.title),
-                      onTap: () => {
-                        Navigator.of(context)
-                            .push(TopicPage.route(topic: topic))
-                      },
-                    ))
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(topic.latestReplyTime.humanReadable()),
-                    const Text("  • "),
-                    const Flexible(child: Text(" 最后回复来自 ")),
-                    InkWell(
-                        onTap: () => {
-                              Navigator.of(context).push(UserPage.route(
-                                  user:
-                                      models.User(name: topic.latestReplyUser)))
-                            },
-                        child: Text(topic.latestReplyUser)),
-                  ],
-                )
-              ],
-            )),
-        CircleAvatar(
-          backgroundColor: Colors.grey,
-          child: Center(child: Text("${topic.replyCount}")),
-        )
+                )),
+            OutlinedButton(
+                onPressed: () {},
+                child: InkWell(
+                  child: Text(topic.node),
+                  onTap: () => {
+                    Navigator.of(context).push(
+                        NodePage.route(node: models.Node(title: topic.node)))
+                  },
+                ))
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Flexible(
+                child: InkWell(
+              child: Text(topic.title),
+              onTap: () =>
+                  {Navigator.of(context).push(TopicPage.route(topic: topic))},
+            ))
+          ],
+        ),
       ],
     );
   }
