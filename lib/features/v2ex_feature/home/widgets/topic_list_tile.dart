@@ -56,16 +56,6 @@ class TopicListTile extends StatelessWidget {
                           style: theme.textTheme.caption,
                         ),
                         const SizedBox(width: 8),
-                        Text(
-                          "comments ${topic.replyCount}",
-                          style: theme.textTheme.caption,
-                        ),
-                        const SizedBox(width: 8),
-                        Flexible(
-                            child: Text(
-                          " 最后回复来自 ",
-                          style: theme.textTheme.caption,
-                        )),
                         const SizedBox(width: 8),
                         InkWell(
                           child: Text(
@@ -78,14 +68,14 @@ class TopicListTile extends StatelessWidget {
                           },
                         ),
                       ],
-                    )
+                    ),
                   ],
                 )),
             InkWell(
               child: ThemeCard(
                 label: topic.node,
                 color: theme.colorScheme.onPrimary,
-                textColor: theme.colorScheme.secondary,
+                textColor: theme.colorScheme.primary,
               ),
               onTap: () => {
                 Navigator.of(context)
@@ -105,6 +95,21 @@ class TopicListTile extends StatelessWidget {
             ))
           ],
         ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Text(
+              "comments ${topic.replyCount}",
+              style: theme.textTheme.caption,
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+                child: Text(
+              " 最后回复来自 ${topic.latestReplyUser}",
+              style: theme.textTheme.caption,
+            ))
+          ],
+        )
       ],
     );
   }
