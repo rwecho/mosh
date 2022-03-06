@@ -2,27 +2,27 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:mosh/features/v2ex_feature/node/view/node_page.dart';
+import 'package:mosh/widgets/avatar_button.dart';
 import 'package:mosh/widgets/comment_tile_widget.dart';
-import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
+import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart' as models;
 import 'package:mosh/l10n/l10n.dart';
 
-import '../../home/bloc/tab_view_bloc.dart';
 import '../bloc/topic_bloc.dart';
 
 class TopicPage extends StatelessWidget {
   const TopicPage({Key? key}) : super(key: key);
 
-  static Route<void> route({required Topic topic}) {
+  static Route<void> route({required models.Topic topic}) {
     return MaterialPageRoute(
       fullscreenDialog: true,
       builder: (context) => BlocProvider(
         create: (context) => TopicViewBloc(
           topic: topic,
-          topicApi: context.read<TopicApiAbstraction>(),
+          topicApi: context.read<models.TopicApiAbstraction>(),
         )..add(TopicViewSubscriptionRequested()),
         child: const TopicPage(),
       ),
@@ -42,15 +42,8 @@ class TopicPage extends StatelessWidget {
 class _TopicView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var topic = context.read<TopicViewBloc>().state.topic;
-
-    final smallButtonStyle = OutlinedButton.styleFrom(
-        minimumSize: const Size(20, 24), padding: const EdgeInsets.all(4));
-    final smallPillButtonStyle = OutlinedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        minimumSize: const Size(20, 24),
-        padding: const EdgeInsets.all(4));
     final l10n = context.l10n;
+    final theme = Theme.of(context);
     return MultiBlocListener(
       listeners: [
         BlocListener<TopicViewBloc, TopicViewState>(
@@ -86,182 +79,148 @@ class _TopicView extends StatelessWidget {
         return Scaffold(
             appBar: AppBar(
               elevation: 0.0,
-              titleSpacing: 10.0,
-              centerTitle: true,
-              leading: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black54,
-                ),
-              ),
-              title: Row(
-                children: [
-                  Text(state.topic.node),
-                ],
-              ),
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back_ios)),
+              title: TextButton(
+                  onPressed: () {
+                    NodePage.route(node: models.Node(title: state.topic.node));
+                  },
+                  child: Text(
+                    state.topic.node,
+                    style: theme.textTheme.titleMedium!
+                        .copyWith(color: theme.colorScheme.onPrimary),
+                  )),
               actions: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz))
+                IconButton(onPressed: () {}, icon: const Icon(Icons.circle)),
+                PopupMenuButton<int>(
+                    itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
+                          const PopupMenuItem<int>(
+                              value: 1, child: Text('Thanks')),
+                          const PopupMenuItem<int>(
+                              value: 2, child: Text('Ignore')),
+                          const PopupMenuItem<int>(
+                              value: 3, child: Text('report')),
+                          const PopupMenuItem<int>(
+                              value: 4, child: Text('Share')),
+                          const PopupMenuItem<int>(
+                              value: 5, child: Text('sort')),
+                          const PopupMenuItem<int>(
+                              value: 6, child: Text('open in browser')),
+                        ],
+                    onSelected: (int value) {})
               ],
             ),
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(topicDetail.title),
-                  Text(
-                      "by ${topicDetail.author} at ${topicDetail.creationTime} • ${topicDetail.visits} views"),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                topicDetail.title,
+                                style: theme.textTheme.titleMedium,
+                              ),
+                            ),
+                            const SizedBox(width: 8.0),
+                            AvatarButton(
+                                avatarUrl: topicDetail.authorAvatar,
+                                onTap: () {})
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        Text(
+                          "by ${topicDetail.author} at ${topicDetail.creationTime} • ${topicDetail.visits} views",
+                          style: theme.textTheme.caption,
+                        ),
+                      ],
+                    ),
+                  ),
                   const Divider(),
                   // todo render markdown
-                  Html(
-                    data: topicDetail.content,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8.0),
+                    child: Text(
+                      topicDetail.content,
+                    ),
                   ),
                   const Divider(),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text("${topicDetail.likes} likes"),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      OutlinedButton(
-                          onPressed: () {
-                            // context
-                            //     .read<TopicViewBloc>()
-                            //     .add(AddToFavoritesRequested());
-                            CupertinoScaffold.showCupertinoModalBottomSheet(
-                                expand: true,
-                                context: context,
-                                backgroundColor: Colors.transparent,
-                                builder: (context) => Stack(
-                                      children: <Widget>[
-                                        Positioned(
-                                          height: 40,
-                                          left: 40,
-                                          right: 40,
-                                          bottom: 20,
-                                          child: MaterialButton(
-                                            onPressed: () => Navigator.of(
-                                                    context)
-                                                .popUntil((route) =>
-                                                    route.settings.name == '/'),
-                                            child: Text('Pop back home'),
-                                          ),
-                                        )
-                                      ],
-                                    ));
-                          },
-                          style: smallButtonStyle,
-                          child: const Text(
-                            "Add to Favorites",
-                            style: TextStyle(fontSize: 12),
-                          )),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      Flexible(
-                          child: ButtonTheme(
-                        minWidth: 10,
-                        child: OutlinedButton(
-                            onPressed: () {},
-                            style: smallButtonStyle,
-                            child: const Text(
-                              "Tweet",
-                              style: TextStyle(fontSize: 12),
-                            )),
-                      )),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      Flexible(
-                          child: OutlinedButton(
-                              onPressed: () {},
-                              style: smallButtonStyle,
-                              child: const Text(
-                                "Share",
-                                style: TextStyle(fontSize: 12),
-                              ))),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      Flexible(
-                          child: OutlinedButton(
-                              onPressed: () {},
-                              style: smallButtonStyle,
-                              child: const Text(
-                                "Ignore",
-                                style: TextStyle(fontSize: 12),
-                              ))),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      Flexible(
-                          fit: FlexFit.loose,
-                          child: OutlinedButton(
-                              onPressed: () {},
-                              style: smallButtonStyle,
-                              child: const Text(
-                                "Thank",
-                                style: TextStyle(fontSize: 12),
-                              ))),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Card(
-                          elevation: 10,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
                           child: Row(
                             children: [
                               const Icon(Icons.tag),
                               OutlinedButton(
-                                  style: smallPillButtonStyle,
                                   onPressed: () {},
-                                  child: Text("Fred's")),
+                                  child: Text(
+                                    "Fred's",
+                                    style: theme.textTheme.caption,
+                                  )),
                               OutlinedButton(
-                                  style: smallPillButtonStyle,
                                   onPressed: () {},
-                                  child: Text("Fred")),
+                                  child: Text(
+                                    "Fred",
+                                    style: theme.textTheme.caption,
+                                  )),
                               OutlinedButton(
-                                  style: smallPillButtonStyle,
                                   onPressed: () {},
-                                  child: Text("scripts")),
+                                  child: Text(
+                                    "scripts",
+                                    style: theme.textTheme.caption,
+                                  )),
                               OutlinedButton(
-                                  style: smallPillButtonStyle,
                                   onPressed: () {},
-                                  child: Text("程序员")),
+                                  child: Text(
+                                    "程序员",
+                                    style: theme.textTheme.caption,
+                                  )),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Card(
-                          child: Column(children: [
-                            Text("${comments.length} replies"),
-                            ...<Widget>[
-                              for (var comment in comments)
-                                buildCommentTileWidget(
-                                    context,
-                                    comment.author,
-                                    comment.authorAvatar,
-                                    comment.replyTime,
-                                    comment.content,
-                                    comment.likes,
-                                    comment.isLike,
-                                    comment.floors)
-                            ]
-                          ]),
-                        ),
-                      ),
-                    ],
-                  )
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
+                    child: Text("${comments.length} replies"),
+                  ),
+                  Column(children: [
+                    const Divider(),
+                    ...<Widget>[
+                      for (var comment in comments)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
+                          child: buildCommentTileWidget(
+                              context,
+                              comment.author,
+                              comment.authorAvatar,
+                              comment.replyTime,
+                              comment.content,
+                              comment.likes,
+                              comment.isLike,
+                              comment.floors),
+                        )
+                    ]
+                  ])
                 ],
               ),
             ));

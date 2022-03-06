@@ -12,10 +12,11 @@ Widget buildCommentTileWidget(
     int likes,
     bool isLike,
     int floors) {
+  final theme = Theme.of(context);
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
-        mainAxisSize: MainAxisSize.max,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(25.0),
@@ -29,32 +30,34 @@ Widget buildCommentTileWidget(
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 imageUrl: authorAvatar),
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(author),
-                    Flexible(
-                        fit: FlexFit.tight,
-                        child: Text(creationTime.humanReadable())),
-                    if (isLike)
-                      IconButton(
-                          onPressed: () {}, icon: const Icon(Typicons.heart)),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.reply)),
-                    OutlinedButton(
-                      onPressed: () {},
-                      child: Text("$floors"),
-                    )
-                  ],
-                ),
-                Text(comment)
-              ],
-            ),
+          const SizedBox(
+            width: 8,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(author),
+              Text(
+                creationTime.humanReadable(),
+                style: theme.textTheme.caption,
+              ),
+            ],
+          ),
+          const Spacer(),
+          if (isLike)
+            IconButton(onPressed: () {}, icon: const Icon(Typicons.heart)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.reply)),
+          OutlinedButton(
+            onPressed: () {},
+            child: Text("$floors"),
           )
         ],
-      )
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Text(comment),
+      ),
+      const Divider(),
     ],
   );
 }
