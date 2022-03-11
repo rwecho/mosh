@@ -1,10 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mosh/features/v2ex_feature/home/view/tab_view.dart';
-import 'package:mosh/features/v2ex_feature/user/view/components/user_info.dart';
-import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart' as models;
 
+import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart' as models;
+import 'package:faker/faker.dart';
 import '../bloc/user_bloc.dart';
+import '../widgets/user_info.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -24,54 +27,100 @@ class UserPage extends StatelessWidget {
 }
 
 class _UserView extends StatelessWidget {
-  List<Widget> _sliverBuilder(BuildContext context, bool innerBoxIsScrolled) {
-    final theme = Theme.of(context);
-    return [
-      SliverAppBar(
-        elevation: 0,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(Icons.arrow_back_ios)),
-        titleSpacing: 0,
-        centerTitle: true,
-        title: const Text("User"),
-        // expandedHeight: 200.0, //todo expand content
-        floating: true,
-        pinned: false,
-        snap: true,
-      ),
-      // SliverPersistentHeader(
-      //   delegate: _SilverAppBarDelegate(),
-      // ),
-    ];
-  }
+  var _tabs = <String>[
+    "Tab 1",
+    "Tab 2",
+    "Tab 3",
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      body: SafeArea(
-        child: NestedScrollView(
-          headerSliverBuilder: _sliverBuilder,
-          body: SingleChildScrollView(
-              child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: UserInfo(),
+        body:
+
+            /// 加TabBar
+            DefaultTabController(
+      length: _tabs.length, // This is the number of tabs.
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          // These are the slivers that show up in the "outer" scroll view.
+          return <Widget>[
+            SliverOverlapAbsorber(
+              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              sliver: SliverAppBar(
+                leading: new IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {},
+                ),
+                title: const Text('标题'),
+                centerTitle: false,
+                pinned: true,
+                floating: false,
+                snap: false,
+                primary: true,
+                expandedHeight: 230.0,
+
+                elevation: 10,
+                //是否显示阴影，直接取值innerBoxIsScrolled，展开不显示阴影，合并后会显示
+                forceElevated: innerBoxIsScrolled,
+
+                actions: <Widget>[
+                  new IconButton(
+                    icon: Icon(Icons.more_horiz),
+                    onPressed: () {
+                      print("更多");
+                    },
+                  ),
+                ],
+
+                flexibleSpace: new FlexibleSpaceBar(background: UserInfo()),
+
+                bottom: TabBar(
+                  tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+                ),
               ),
-              Divider(),
-              // TabBar(tabs: [
-              //   Tab(
-              //     text: "主题",
-              //   )
-              // ]),
-              // TabBarView(children: [Text("主题")])
-            ],
-          )),
+            ),
+          ];
+        },
+        body: TabBarView(
+          // These are the contents of the tab views, below the tabs.
+          children: _tabs.map((String name) {
+            //SafeArea 适配刘海屏的一个widget
+            return SafeArea(
+              top: false,
+              bottom: false,
+              child: Builder(
+                builder: (BuildContext context) {
+                  return CustomScrollView(
+                    key: PageStorageKey<String>(name),
+                    slivers: <Widget>[
+                      SliverOverlapInjector(
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                            context),
+                      ),
+                      SliverPadding(
+                        padding: const EdgeInsets.all(0.0),
+                        sliver: SliverFixedExtentList(
+                          itemExtent: 50.0, //item高度或宽度，取决于滑动方向
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return ListTile(
+                                title: Text('Item $index'),
+                              );
+                            },
+                            childCount: 30,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            );
+          }).toList(),
         ),
       ),
-    );
+    ));
   }
 }
