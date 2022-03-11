@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mosh/features/v2ex_feature/home/view/tab_view.dart';
+import 'package:mosh/features/v2ex_feature/user/widgets/comment_tile.dart';
 
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart' as models;
 import 'package:faker/faker.dart';
 import '../bloc/user_bloc.dart';
+import '../widgets/topic_tile.dart';
 import '../widgets/user_info.dart';
 
 class UserPage extends StatelessWidget {
@@ -28,10 +30,17 @@ class UserPage extends StatelessWidget {
 
 class _UserView extends StatelessWidget {
   var _tabs = <String>[
-    "Tab 1",
-    "Tab 2",
-    "Tab 3",
+    "主题",
+    "回复",
   ];
+
+  Widget _builderTopicListTabBarView() {
+    return Text("");
+  }
+
+  Widget _BuilderCommentListTabBarView() {
+    return Text("");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,43 +92,24 @@ class _UserView extends StatelessWidget {
             ),
           ];
         },
-        body: TabBarView(
-          // These are the contents of the tab views, below the tabs.
-          children: _tabs.map((String name) {
-            //SafeArea 适配刘海屏的一个widget
-            return SafeArea(
-              top: false,
-              bottom: false,
-              child: Builder(
-                builder: (BuildContext context) {
-                  return CustomScrollView(
-                    key: PageStorageKey<String>(name),
-                    slivers: <Widget>[
-                      SliverOverlapInjector(
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
-                      ),
-                      SliverPadding(
-                        padding: const EdgeInsets.all(0.0),
-                        sliver: SliverFixedExtentList(
-                          itemExtent: 50.0, //item高度或宽度，取决于滑动方向
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return ListTile(
-                                title: Text('Item $index'),
-                              );
-                            },
-                            childCount: 30,
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            );
-          }).toList(),
-        ),
+        body: TabBarView(children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
+                itemCount: 10000,
+                itemBuilder: (context, index) {
+                  return TopicTile();
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
+                itemCount: 10000,
+                itemBuilder: (context, index) {
+                  return CommentTile();
+                }),
+          )
+        ]),
       ),
     ));
   }
