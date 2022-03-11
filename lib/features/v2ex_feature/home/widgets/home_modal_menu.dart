@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mosh/features/v2ex_feature/about/about.dart';
 import 'package:mosh/features/v2ex_feature/favourites/favourites.dart';
 import 'package:mosh/features/v2ex_feature/following/following.dart';
-import 'package:mosh/features/v2ex_feature/hottest/hottest.dart';
 import 'package:mosh/features/v2ex_feature/new_topic/new_topic.dart';
 import 'package:mosh/features/v2ex_feature/nodes/nodes.dart';
 import 'package:mosh/features/v2ex_feature/notifications/notifications.dart';
@@ -39,13 +38,6 @@ class ModalMenu extends StatelessWidget {
                 ),
               ),
               Divider(),
-              ListTile(
-                title: const Text("Hosttest"),
-                leading: Icon(Icons.hourglass_full_sharp),
-                onTap: () {
-                  Navigator.of(context).push(HottestPage.route());
-                },
-              ),
               ListTile(
                 title: const Text("Recent"),
                 leading: Icon(Icons.place_sharp),
