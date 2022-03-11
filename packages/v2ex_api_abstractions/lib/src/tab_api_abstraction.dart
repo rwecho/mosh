@@ -2,7 +2,6 @@ import '../v2ex_api_abstractions.dart';
 
 abstract class TabApiAbstraction {
   const TabApiAbstraction();
-
   List<Tab> getTabs();
 }
 
@@ -24,4 +23,17 @@ abstract class TopicApiAbstraction {
   Future<void> ignore(Topic topic);
 
   Future<void> thank(Topic topic);
+
+  Future<void> thankComment(Comment comment);
+  Future<void> quoteCommenter(Comment comment);
 }
+
+abstract class NodeApiAbstraction {}
+
+abstract class UserApiAbstraction {}
+
+abstract class NotificationApiAbstraction {}
+
+abstract class SearchApiAbstraction {}
+
+abstract class SettingsApiAbstraction {}

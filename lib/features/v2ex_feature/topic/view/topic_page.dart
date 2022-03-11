@@ -94,7 +94,6 @@ class _TopicView extends StatelessWidget {
                         .copyWith(color: theme.colorScheme.onPrimary),
                   )),
               actions: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.circle)),
                 PopupMenuButton<int>(
                     itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
                           const PopupMenuItem<int>(

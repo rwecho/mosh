@@ -6,24 +6,28 @@ import 'package:mosh/l10n/l10n.dart';
 import 'package:todos_repository/todos_repository.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:faker/faker.dart';
 
 class App extends StatelessWidget {
-  const App(
+  App(
       {Key? key,
       required this.todosRepository,
       required this.tabApi,
       required this.topicApi})
-      : super(key: key);
+      : faker = Faker(),
+        super(key: key);
 
   final TodosRepository todosRepository;
   final TabApiAbstraction tabApi;
   final TopicApiAbstraction topicApi;
+  final Faker faker;
 
   @override
   Widget build(BuildContext context) {
     // DI widget to provider a repository to subtrees.
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider<Faker>(create: (context) => faker),
         RepositoryProvider<TodosRepository>(
             create: (context) => todosRepository),
         RepositoryProvider<TabApiAbstraction>(create: (context) => tabApi),

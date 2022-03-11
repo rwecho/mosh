@@ -116,4 +116,16 @@ class TopicApi extends TopicApiAbstraction with AbstractionBase {
     // TODO: implement tweet
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> quoteCommenter(Comment comment) {
+    // TODO: implement quoteCommenter
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> thankComment(Comment comment) {
+    // TODO: implement thankComment
+    throw UnimplementedError();
+  }
 }
