@@ -58,9 +58,11 @@ class _UserView extends StatelessWidget {
             SliverOverlapAbsorber(
               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               sliver: SliverAppBar(
-                leading: new IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {},
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
                 title: const Text('标题'),
                 centerTitle: false,

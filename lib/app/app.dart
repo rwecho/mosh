@@ -1,7 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mosh/features/features.dart';
+import 'package:mosh/features/v2ex_feature/login/login.dart';
 import 'package:mosh/l10n/l10n.dart';
 import 'package:todos_repository/todos_repository.dart';
 import 'package:v2ex_api_abstractions/v2ex_api_abstractions.dart';
@@ -58,7 +58,7 @@ class AppView extends StatelessWidget {
       themeMode: ThemeMode.system,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
